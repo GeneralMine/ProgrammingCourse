@@ -314,6 +314,7 @@ print("Der vorletzte Buchstabe ist: ", alph[-2])
 
 
 #len() gibt die Länge einer Liste zurück
+print(len(list4))
 for i in range(len(list4)):
 	print("Das Element bei Index ", i, " ist: ", list4[i])
 
@@ -420,6 +421,7 @@ else:
 #Das Programm soll einem nach jedem mal raten sagen, ob die geratene Zahl größer, gleich oder kleiner als die gesuchte Zahl ist.
 
 #Lösung
+
 mini = 1
 maxi = 100
 r = random.randint(mini, maxi)
@@ -490,7 +492,7 @@ print(f2(3))
 #führe die Funktion für die Werte n=10, n=200, n=5000 aus und gebe das Ergebnis aus
 
 #Lösung
-def sum_to_n(n)
+def sum_to_n(n):
 	res = 0
 	for i in range(n+1):
 		res += i
