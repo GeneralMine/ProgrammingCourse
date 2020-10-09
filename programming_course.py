@@ -217,7 +217,7 @@ d = (5 <= 78)
 e = !c
 f = a or b
 g = a and b
-h = b or (a and !c)
+h = b or (a and not c)
 
 if f:
 	print("f is True")
@@ -235,9 +235,9 @@ while True:
 	print("Endlosschleifen sind böse!")
 
 a = 1
-
-while a <= int(input("Bis zu welcher Zahl möchtest du zählen? ")):
-	print a
+maximum = int(input("Bis zu welcher Zahl möchtest du zählen? "))
+while a <= maximum:
+	print(a)
 	a += 1 # ist das gleiche wie a = a+1
 
 #Es gibt auch -=, *= und /=
@@ -254,7 +254,7 @@ for i in range(13):#von 0 bis 22
 for i in range(2,15): #von 0 bis 43
 	print(i)
 
-for i in range(3,36,3) #von drei an jede dritte Zahl, die kleiner als 36 ist
+for i in range(3,36,3): #von drei an jede dritte Zahl, die kleiner als 36 ist
 	print(i)
 
 
