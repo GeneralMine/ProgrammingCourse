@@ -1,4 +1,4 @@
-
+#Die Datei ist nicht ganz vollständig. Siehe dir lieber die Notebooks an.
 
 
 ######################## Day 1 ##########################
@@ -665,6 +665,8 @@ print(ceasar_dec(enc,2))
 
 ####################################### Day 4 ###########################################
 
+#Besprechung Hausaufgaben
+
 
 #Rekursion
 
@@ -762,7 +764,7 @@ print(buying)
 prices2["Carrot"] = 1.5
 print(prices2["Carrot"])
 
-for key, value in prices2:
+for key, value in prices2.items():
 	print("The product ", key, " costs ", value, "€.")
 
 
@@ -809,7 +811,7 @@ for item in list1:
 	left = 0
 	right = len(list2)-1
 	while left <= right:
-		mid = (left + right)/2
+		mid = (left + right)//2
 		if list2[mid] == item:
 			shared.append(item)
 			break #bricht aus der inneren Schleife aus (wir müssen dann nicht mehr weiter suchen)
@@ -915,7 +917,325 @@ def binom(n,k):
 		return 	mem[(n,k)]
 
 
+################################# Day 5 #########################
 
+#Besprechung Aufgaben
+
+
+#Juhu wir programmieren ein Spiel (Hangman)
+
+#Regeln von Hangman erklären und wie das Spiel aussehen soll
+
+from turtle import *#Turtle ist ein Modul mit dem man zeichnen kann
+
+pencolor('brown')
+fillcolor('yellow')
+
+# set start position
+penup()
+goto(-160,-100)
+pendown()
+
+strich = 60
+
+def zeichneSchritt(nummer):
+  nummer = nummer - 1
+
+  # Zeichne Gerüst
+  if nummer == 0:
+    left(90)
+    circle(-60,180)
+    circle(-60,-90)
+    left(90)
+  # Zeichne Balken vertikal
+  elif nummer == 1:
+    forward(strich*3)
+    right(90)
+  # Zeichne Balken Horiziontal
+  elif nummer == 2:
+    forward(strich*2)
+  elif nummer == 3:
+    right(180)
+    forward(strich*1.3)
+    left(45)
+    forward(strich)
+    right(180)
+    forward(strich)
+    right(45)
+    forward(strich*1.3)
+    right(90)
+  # Zeichne Strick
+  elif nummer == 4:
+    forward(strich)
+  # Zeichne Kopf
+  elif nummer == 5:
+    pencolor('blue')
+    dot(strich/4)
+  # Zeichne Körper
+  elif nummer == 6:
+    forward(strich*1.5)
+  # Zeichne Bein links
+  elif nummer == 7:
+    right(45)
+    forward(strich)
+    right(180)
+    forward(strich)
+  # Zeichne Bein rechts
+  elif nummer == 8:
+    right(90)
+    forward(strich)
+    right(180)
+    forward(strich)
+  # Zeichne Hand links
+  elif nummer == 9:
+    right(45)
+    forward(strich)
+    left(45)
+    forward(strich)
+    right(180)
+    forward(strich)
+  # Zeichne Hand rechts
+  elif nummer == 10:
+    left(90)
+    forward(strich)
+    right(180)
+    forward(strich)
+  else:
+    print("Das kann ich nicht zeichnen!")
+
+
+def buchstabeInSammlung(buchstabe):
+ 	return buchstabe in buchstabenSammlung
+
+
+def buchstabeInWort(buchstabe):
+ 	if buchstabe != "":
+    	return buchstabe in wort
+
+
+def fuegeBuchstabeHinzu(buchstabe):
+ 	if buchstabe != "":
+    	buchstabenSammlung.append(buchstabe)
+
+
+def printWort():
+  	ausgabe = ""
+
+  	for buchstabe in wort:
+    	if buchstabe.lower() in buchstabenSammlung:
+    	  ausgabe = ausgabe + buchstabe + " "
+    	else:
+ 	     	ausgabe = ausgabe + "_ "
+  
+  	print(ausgabe)
+
+def pruefeGewonnen():
+  	anzahlRichtigeBuchstaben = 0
+
+  	for buchstabe in wort:
+    	if buchstabe.lower() in buchstabenSammlung:
+      		anzahlRichtigeBuchstaben = anzahlRichtigeBuchstaben + 1
+
+  	return anzahlRichtigeBuchstaben == len(wort)
+
+def printBuchstabenSammlung():
+  	print("Bekannte Buchstaben: " + " ".join(buchstabenSammlung))
+
+buchstabenSammlung = []
+
+
+### Ab hier etwas verändern
+
+
+## Aufbau des Programms
+
+### zeichnen mit Turtle
+fehlerNummer = 0
+
+while fehlerNummer != 11:
+  	fehlerNummer = fehlerNummer + 1
+  	zeichneSchritt(fehlerNummer)
+
+
+### Einlesen
+#### Einführen von input mit Parameter
+buchstabe = input("Gib hier den naechsten Buchstaben ein: ")
+wort = "blume"
+
+if buchstabeInSammlung(buchstabe):
+ 	print(buchstabe + " hast du bereits geraten")
+elif buchstabeInWort(buchstabe):
+  	print("Richtig! " + buchstabe + " ist in dem gesuchten Wort enthalten!")
+else:
+ 	print("Der Buchstabe ist leider nicht im Wort!")
+
+
+### Hinzufügen bekannter Buchstaben
+buchstabe = input("Gib hier den naechsten Buchstaben ein: ")
+
+fuegeBuchstabeHinzu(buchstabe)
+printBuchstabenSammlung()
+
+
+### Aufgabe: Einlesen + Hinzufügen
+buchstabe = input("Gib hier den naechsten Buchstaben ein: ")
+wort = "blume"
+fehlerNummer = 0
+
+if buchstabeInSammlung(buchstabe):
+  	fehlerNummer = fehlerNummer + 1
+  	zeichneSchritt(fehlerNummer)
+  	print( buchstabe + " hast du bereits geraten")
+elif buchstabeInWort(buchstabe):
+  	fuegeBuchstabeHinzu(buchstabe)
+  	print("Richtig! " + buchstabe + " ist in dem gesuchten Wort enthalten!")
+else:
+  	fehlerNummer = fehlerNummer + 1
+  	zeichneSchritt(fehlerNummer)
+  	fuegeBuchstabeHinzu(buchstabe)
+  	print("Der Buchstabe ist leider nicht im Wort!")
+
+printBuchstabenSammlung()
+
+
+### mehrere Buchstaben mit while hinzufügen
+zahl = 0
+
+while zahl != 6:
+  	buchstabe = input("Gib hier den naechsten Buchstaben ein: ")
+
+  	fuegeBuchstabeHinzu(buchstabe)
+  	printBuchstabenSammlung()
+  	zahl = zahl + 1
+
+
+### Aufgabe: Einlesen + Hinzufügen + While
+wort = "blume"
+
+zahl = 0
+fehlerNummer = 0
+
+while zahl != 6:
+
+  	buchstabe = input("Gib hier den naechsten Buchstaben ein: ")
+
+  	if buchstabeInSammlung(buchstabe):
+    	fehlerNummer = fehlerNummer + 1
+    	zeichneSchritt(fehlerNummer)
+    	print( buchstabe + " hast du bereits geraten")
+  	elif buchstabeInWort(buchstabe):
+    	fuegeBuchstabeHinzu(buchstabe)
+    	print("Richtig! " + buchstabe + " ist in dem gesuchten Wort enthalten!")
+  	else:
+    	fehlerNummer = fehlerNummer + 1
+    	zeichneSchritt(fehlerNummer)
+    	fuegeBuchstabeHinzu(buchstabe)
+    	print("Der Buchstabe ist leider nicht im Wort!")
+
+  	printBuchstabenSammlung()
+
+  	zahl = zahl + 1
+
+
+### Einlesen + Hinzufügen + While + Gewinnen
+wort = "blume"
+
+gewonnen = False
+fehlerNummer = 0
+
+while gewonnen == False:
+  	buchstabe = input("Gib hier den naechsten Buchstaben ein: ")
+
+  	if buchstabeInSammlung(buchstabe):
+    	fehlerNummer = fehlerNummer + 1
+    	zeichneSchritt(fehlerNummer)
+    	print( buchstabe + " hast du bereits geraten")
+  	elif buchstabeInWort(buchstabe):
+    	fuegeBuchstabeHinzu(buchstabe)
+    	print("Richtig! " + buchstabe + " ist in dem gesuchten Wort enthalten!")
+  	else:
+    	fehlerNummer = fehlerNummer + 1
+    	zeichneSchritt(fehlerNummer)
+    	fuegeBuchstabeHinzu(buchstabe)
+    	print("Der Buchstabe ist leider nicht im Wort!")
+
+  	printWort()
+
+  	printBuchstabenSammlung()
+
+  	if pruefeGewonnen():
+    	gewonnen = True
+
+print("Juhu!! Du hast gewonnen! Alles richtig!")
+
+### Letzter Schritt zur Musterlösung ist zuEnde und Verloren hinzufügen
+### Musterlösung
+print("Willkommen zu Galgenmaennchen vom Science Duo Diana und Marvin!")
+
+wort = "blume"
+
+zuEnde = False
+gewonnen = False
+
+fehlerNummer = 0
+
+while(not zuEnde):
+  	buchstabe = input("Gib hier den naechsten Buchstaben ein: ")
+
+  	if buchstabeInSammlung(buchstabe):
+    	fehlerNummer = fehlerNummer + 1
+    	zeichneSchritt(fehlerNummer)
+    	print( buchstabe + " hast du bereits geraten")
+  	elif buchstabeInWort(buchstabe):
+    	fuegeBuchstabeHinzu(buchstabe)
+    	print("Richtig! " + buchstabe + " ist in dem gesuchten Wort enthalten!")
+  	else:
+    	fehlerNummer = fehlerNummer + 1
+    	zeichneSchritt(fehlerNummer)
+    	fuegeBuchstabeHinzu(buchstabe)
+    	print("Der Buchstabe ist leider nicht im Wort!")
+
+  	printWort()
+  
+  	printBuchstabenSammlung()
+
+  	## verloren
+  	if fehlerNummer == 11:
+    	zuEnde = True
+    	gewonnen = False
+
+  	## gewonnen
+  	if pruefeGewonnen():
+    	zuEnde = True
+    	gewonnen = True
+  	print("")
+  
+if gewonnen == True:
+  	print("Juhu!! Du hast gewonnen! Alles richtig!")
+else:
+  	print("Oh schade. Du hast leider verloren :(")
+
+
+
+
+## Verbesserungsmöglichkeit
+### Das Wort mit einem input() einzulesen
+
+## Foto-Shooting
+
+
+
+## logische Schritte der Musterlösung
+# 1. print Begrüßung
+# 2. Wort definieren
+# 3. input nächster Buchstabe
+# 4. buchstabenSammlung prüfen
+# 4.1. Ist Buchstabe schon vorhanden
+# 4.2. Ist Buchstabe in Wort
+# 4.3. Buchstabe richtig oder falsch evaluieren
+# 4.4. Buchstabe zur Sammlung hinzufügen
+# 5. Bekannte buchstabenSammlung ausgeben
+# 6. Gewonnen und verloren evaluieren (while Abbruchbedingung)
 
 
 
@@ -929,6 +1249,10 @@ def binom(n,k):
 ##was viellecht noch fehlt:
 #Geltungsbereich der Variablen (nur in einer Funktion oder in einer Schleife, wenn sie dort initialisiert wurden)
 #(gibt auch globale Variablen mit global) --> bei der Einführung von Schleifen und Funktionen sagen
+#wie man mit Dateien arbeitet: Einlese/Ausgabe
+#module und libraries / mit mehreren Dateien arbeiten
+#Klassen und so
+
 
 
 ##Noch ein paar Tipps
